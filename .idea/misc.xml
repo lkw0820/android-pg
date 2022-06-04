@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Walkin_Map/app/src/main/res/layout/activity_finder.xml" value="0.1911231884057971" />
+        <entry key="..\:/Android/Walkin_Map/app/src/main/res/layout/activity_finder2.xml" value="0.1" />
+        <entry key="..\:/Android/Walkin_Map/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Android/Walkin_Map/app/src/main/res/layout/activity_maps.xml" value="0.14130434782608695" />
+        <entry key="..\:/Android/Walkin_Map/app/src/main/res/layout/activity_real_main.xml" value="0.1911231884057971" />
       </map>
     </option>
   </component>

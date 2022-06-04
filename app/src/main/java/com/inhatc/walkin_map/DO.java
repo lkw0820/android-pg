@@ -2,7 +2,7 @@ package com.inhatc.walkin_map;
 
 public class DO {
     public String latitude;
-    public String longitue;
+    public String longitude;
 
     public String getLatitude() {
         return latitude;
@@ -12,11 +12,11 @@ public class DO {
         this.latitude = latitude;
     }
 
-    public String getLongitue() {
-        return longitue;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setLongitue(String longitue) {
-        this.longitue = longitue;
+    public void setLongitude(String longitue) {
+        this.longitude = longitue;
     }
 }
