@@ -1,8 +1,8 @@
 package com.inhatc.walkin_map;
 
 public class DO {
-    public String latitude;
-    public String longitude;
+    private String latitude;
+    private String longitude;
 
     public String getLatitude() {
         return latitude;

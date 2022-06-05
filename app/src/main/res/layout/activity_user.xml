@@ -6,4 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".UserActivity">
 
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="128dp"
+        android:text="시작"
+        app:layout_constraintEnd_toEndOf="@+id/btnStop"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/btnStop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="116dp"
+        android:text="중지"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

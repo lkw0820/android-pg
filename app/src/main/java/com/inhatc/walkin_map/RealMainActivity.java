@@ -19,7 +19,6 @@ public class RealMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_main);
 
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION},0);
 
 
         btnFinder = (Button)findViewById(R.id.btnFinder);

@@ -25,7 +25,7 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/btnTest"
+            android:id="@+id/btnStart2"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:text="적용"

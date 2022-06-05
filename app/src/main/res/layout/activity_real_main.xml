@@ -11,21 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
+
         <Button
+            android:id="@+id/btnFinder"
             android:layout_width="300dp"
             android:layout_height="200dp"
-            android:text="추적자"
-            android:id="@+id/btnFinder"/>
+            android:text="시작하기" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
+
         <Button
+            android:id="@+id/btnUser"
             android:layout_width="300dp"
             android:layout_height="200dp"
-            android:text="사용자"
-            android:id="@+id/btnUser"/>
+            android:text="확인하기" />
 
     </LinearLayout>
 

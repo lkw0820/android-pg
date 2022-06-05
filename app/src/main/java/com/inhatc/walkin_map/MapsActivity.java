@@ -1,7 +1,6 @@
 package com.inhatc.walkin_map;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -23,7 +22,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         edtLat = (EditText) findViewById(R.id.edtLat);
         edtLon = (EditText) findViewById(R.id.edtLon);
-        btnTest = (Button) findViewById(R.id.btnTest);
+        btnTest = (Button) findViewById(R.id.btnStart2);
 
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
