@@ -8,6 +8,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,6 +26,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.inhatc.walkin_map.databinding.ActivityFinder2Binding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -43,7 +47,10 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
     Button btnBack = null;
     LocationManager manager = null;
     private Location location;
-    LatLng currentPosition; //시작 위치값
+    LatLng currentPosition;//시작 위치값
+    LatLng lastPosition;//종료 위치값
+    DO data = null;
+    List<Polyline> polylines = new ArrayList<Polyline>();
 
 
     @Override
@@ -70,11 +77,14 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                DO data = dataSnapshot.getValue(DO.class);
+                data = dataSnapshot.getValue(DO.class);
                 LatLng point = new LatLng(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude()));
                 mMap.addMarker(new MarkerOptions().position(point).title("내위치"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
-                mMap.moveCamera(CameraUpdateFactory.zoomTo(17.5f));
+                mMap.moveCamera(CameraUpdateFactory.zoomTo(15.5f));
+                //현재 위치값
+                Toast.makeText(getApplicationContext(),"위도 : "+ data.getLatitude()+" 경도 : "+data.getLongitude(),Toast.LENGTH_LONG);
+
                 //Log.d(TAG, "Value is: " + value);
             }
 
@@ -95,9 +105,11 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
             public void onClick(View view) {
                 //위치값 실시간으로 얻어오기 권한요청 LocationManager LocationListener requestLocationUpdates
                 manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                //location = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, FinderActivity2.this);
-                currentPosition = new LatLng(location.getLatitude(),location.getLongitude());
+                //현재 위치값
+                currentPosition = new LatLng(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude()));
+
             }
         });
 
@@ -106,8 +118,13 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
             public void onClick(View view) {
                 //위치값 받아오기 종료
                 //파이어베이스에 저장하지 않음
+                lastPosition = new LatLng(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude()));
                 manager.removeUpdates(FinderActivity2.this);
                 manager = null;
+                //polyline 그리기
+                PolylineOptions options = new PolylineOptions().add(currentPosition).add(lastPosition).width(15).color(Color.BLACK).geodesic(true);
+                polylines.add(mMap.addPolyline(options));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,18));
             }
         });
 
