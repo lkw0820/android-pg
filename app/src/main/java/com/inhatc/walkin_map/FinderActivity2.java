@@ -51,6 +51,7 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
     LatLng lastPosition;//종료 위치값
     DO data = null;
     List<Polyline> polylines = new ArrayList<Polyline>();
+    PolylineOptions options = new PolylineOptions();;
 
 
     @Override
@@ -71,6 +72,12 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("userLocation");
 
+        /*double lat = location.getLatitude();
+        double lon = location.getLongitude();
+
+        myRef.child("latitude").setValue(""+lat);
+        myRef.child("longitude").setValue(""+lon);*/
+
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,6 +89,9 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
                 mMap.addMarker(new MarkerOptions().position(point).title("내위치"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
                 mMap.moveCamera(CameraUpdateFactory.zoomTo(15.5f));
+                //options = new PolylineOptions().add(currentPosition).add(lastPosition).width(15).color(Color.BLACK).geodesic(true);
+                PolylineOptions polylineOptions = new PolylineOptions();
+                options.add(point);
                 //현재 위치값
                 Toast.makeText(getApplicationContext(),"위도 : "+ data.getLatitude()+" 경도 : "+data.getLongitude(),Toast.LENGTH_LONG);
 
@@ -122,9 +132,10 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
                 manager.removeUpdates(FinderActivity2.this);
                 manager = null;
                 //polyline 그리기
-                PolylineOptions options = new PolylineOptions().add(currentPosition).add(lastPosition).width(15).color(Color.BLACK).geodesic(true);
+                //PolylineOptions options = new PolylineOptions().add(currentPosition).add(lastPosition).width(15).color(Color.BLACK).geodesic(true);
+                options.width(15).color(Color.BLACK).geodesic(true);
                 polylines.add(mMap.addPolyline(options));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition,18));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPosition,20));
             }
         });
 
@@ -143,7 +154,6 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
         //manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
 
     }
-
     //위치정보가 변경되었을때 실행
     @Override
     public void onLocationChanged(@NonNull Location location) {
@@ -158,6 +168,7 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
         myRef.child("longitude").setValue(""+lon);
 
     }
+
 
     @Override
     public void onLocationChanged(@NonNull List<Location> locations) {
