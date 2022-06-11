@@ -3,6 +3,15 @@ package com.inhatc.walkin_map;
 public class DO {
     private String latitude;
     private String longitude;
+    private String distance;
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
 
     public String getLatitude() {
         return latitude;
@@ -16,7 +25,7 @@ public class DO {
         return longitude;
     }
 
-    public void setLongitude(String longitue) {
-        this.longitude = longitue;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

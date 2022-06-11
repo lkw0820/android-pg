@@ -51,7 +51,8 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
     LatLng lastPosition;//종료 위치값
     DO data = null;
     List<Polyline> polylines = new ArrayList<Polyline>();
-    PolylineOptions options = new PolylineOptions();;
+    PolylineOptions options = new PolylineOptions();
+    double distance = 0;
 
 
     @Override
@@ -93,7 +94,7 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
                 PolylineOptions polylineOptions = new PolylineOptions();
                 options.add(point);
                 //현재 위치값
-                Toast.makeText(getApplicationContext(),"위도 : "+ data.getLatitude()+" 경도 : "+data.getLongitude(),Toast.LENGTH_LONG);
+                //Toast.makeText(getApplicationContext(),"위도 : "+ data.getLatitude()+" 경도 : "+data.getLongitude(),Toast.LENGTH_LONG);
 
                 //Log.d(TAG, "Value is: " + value);
             }
@@ -154,18 +155,33 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
         //manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
 
     }
+    private Location beforeLocation = null;
+
+
+
+
     //위치정보가 변경되었을때 실행
     @Override
     public void onLocationChanged(@NonNull Location location) {
+
+        if(beforeLocation != null) {
+            distance += beforeLocation.distanceTo(location);
+        }
+        beforeLocation=location;
+
         //파이어베이스에 저장
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("userLocation");
+
 
         double lat = location.getLatitude();
         double lon = location.getLongitude();
 
         myRef.child("latitude").setValue(""+lat);
         myRef.child("longitude").setValue(""+lon);
+        myRef.child("distance").setValue(""+distance);
+
+
 
     }
 

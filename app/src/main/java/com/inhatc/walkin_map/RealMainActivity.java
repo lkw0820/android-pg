@@ -46,6 +46,7 @@ public class RealMainActivity extends AppCompatActivity implements LocationListe
         btnFinder = (Button)findViewById(R.id.btnFinder);
         btnUser = (Button)findViewById(R.id.btnUser);
 
+
         btnFinder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
