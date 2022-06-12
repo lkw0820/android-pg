@@ -7,23 +7,47 @@
     tools:context=".UserActivity">
 
     <Button
-        android:id="@+id/btnStart"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="128dp"
-        android:text="시작"
-        app:layout_constraintEnd_toEndOf="@+id/btnStop"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/btnStop"
+        android:id="@+id/btnStop"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="108dp"
+        android:text="나가기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTotal" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginBottom="62dp"
+        android:text="***님 안녕하세요"
+        app:layout_constraintBottom_toTopOf="@+id/txtEmail"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnStop"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginBottom="116dp"
-        android:text="중지"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="78dp"
+        android:text="Email"
+        app:layout_constraintBottom_toTopOf="@+id/txtTotal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+    <TextView
+        android:id="@+id/txtTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="292dp"
+        android:text="총 운동 거리"
+        app:layout_constraintBottom_toTopOf="@+id/btnStop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,94 +7,75 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class UserActivity extends AppCompatActivity implements LocationListener {
+public class UserActivity extends AppCompatActivity {
 
-    Button btnStart = null;
     Button btnStop = null;
-    LocationManager manager = null;
+    String name = null;
+    String email = null;
+    String total = null;
+    private TextView txtName;
+    private TextView txtEmail;
+    private TextView txtTotal;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
 
-        btnStart = (Button) findViewById(R.id.btnStart);
+        txtName = (TextView) findViewById(R.id.txtName);
+        txtEmail = (TextView) findViewById(R.id.txtEmail);
+        txtTotal = (TextView) findViewById(R.id.txtTotal);
         btnStop = (Button) findViewById(R.id.btnStop);
 
-        //권한 요청
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION},0);
-
-
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("MissingPermission")
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                //위치값 실시간으로 얻어오기 권한요청 LocationManager LocationListener requestLocationUpdates
-                manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, UserActivity.this);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                DO data = dataSnapshot.getValue(DO.class);
+                //파이어베이스에서 이름 email 운동량 가져와야함
+                total = data.getDistance();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
             }
         });
+        txtName.setText(name);
+        txtEmail.setText(email);
+        txtName.setText(total);
+
 
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //위치값 받아오기 종룍
-                //파이어베이스에 저장하지 않음
-                manager.removeUpdates(UserActivity.this);
-                manager = null;
-
+                Intent i = new Intent(getApplicationContext(),FinderActivity2.class);
+                startActivity(i);
+                //finish();
             }
         });
-        //LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
 
-    }
-
-    //위치정보가 변경되었을때 실행
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        //파이어베이스에 저장
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("userLocation");
-
-        double lat = location.getLatitude();
-        double lon = location.getLongitude();
-
-        myRef.child("latitude").setValue(""+lat);
-        myRef.child("longitude").setValue(""+lon);
-
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull List<Location> locations) {
-        LocationListener.super.onLocationChanged(locations);
-    }
-
-    @Override
-    public void onFlushComplete(int requestCode) {
-        LocationListener.super.onFlushComplete(requestCode);
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-        LocationListener.super.onProviderEnabled(provider);
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-        LocationListener.super.onProviderDisabled(provider);
     }
 }

@@ -73,11 +73,7 @@ public class FinderActivity2 extends FragmentActivity implements OnMapReadyCallb
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("userLocation");
 
-        /*double lat = location.getLatitude();
-        double lon = location.getLongitude();
 
-        myRef.child("latitude").setValue(""+lat);
-        myRef.child("longitude").setValue(""+lon);*/
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
